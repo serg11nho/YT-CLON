@@ -1,7 +1,15 @@
+/* ======================== */
+/* 1. VARIABLES Y RESET */
+/* ======================== */
+
 :root {
-    --primary-color: #0f9b1b85;
-    --secondary-color: #b3b0b0;
-    --padding: 10px
+    --yt-red: #ff0000;
+    --yt-grey-light: #f1f1f1; /* Color del texto principal */
+    --yt-grey-medium: #aaaaaa; /* Color para metadatos (vistas, tiempo) */
+    --yt-grey-dark: #212121; /* Color de la barra de navegación */
+    --yt-background: #0f0f0f; /* Fondo principal muy oscuro */
+    --padding-sm: 10px;
+    --padding-lg: 20px;
 }
 
 * {
@@ -10,62 +18,139 @@
     padding: 0;
 }
 
-body {
-    font-family: Arial, sans-serif;
-    background-color: rgba(37, 31, 31, 0.336)
+a { 
+    text-decoration: none; 
+    color: rgba(255, 255, 255, 0.751);
 }
 
+body {
+    font-family: 'Roboto', Arial, sans-serif;
+    background-color: var(--yt-background);
+}
+
+/* ======================== */
+/* 2. BARRA DE NAVEGACIÓN (HEADER) */
+/* ======================== */
+
 .navbar {
-    background-color: var(---secondary-color);
+    background-color: var(--yt-grey-dark);
     position: sticky;
-    padding: var(--padding);
+    top: 0;
+    z-index: 100;
+    padding: var(--padding-sm) var(--padding-lg);
     display: flex;
     align-items: center;
+    justify-content: space-between;
+    height: 56px;
 }
 
 .logo {
     object-fit: contain;
-    height: 30px;
-    width: auto;
-    display: block;
-    margin: 5px;
-    margin-top: 5px;
+    height: 25px;
+    margin-left: 20px;
     cursor: pointer;
 }
 
+/* Barra de Búsqueda */
 .searchbox {
     display: flex;
     align-items: center;
+    flex-grow: 0.6;
+    border-radius: 15px;
 }
 
 .search-input {
-    justify-content: center;
-    border-radius: 5px;
-    padding: 0 7px;
-    margin-left: 10px;
+    flex-grow: 1;
+    height: 32px;
+    padding: 2px 6px;
+    border: 1px solid #303030;
+    background-color: #121212;
+    color: var(--yt-grey-light);
+    border-radius: 2px 0 0 2px;
+    font-size: 16px;
 }
 
-.search-input::placeholder {
-    padding: 1px;
+.search-input:focus {
+    outline: none;
+    border-color: #1c62b9;
 }
 
 .search-button {
-    margin-left: 5px;
-    border: none;
-    padding: 10px;
-    border-radius: 5px 5px 5px 5px;
+    background-color: #303030;
+    border: 1px solid #303030;
+    border-left: none;
+    height: 32px;
+    width: 60px;
+    padding: 8px;
+    border-radius: 0 2px 2px 0;
     cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .search-button img {
     height: 15px;
     width: 15px;
 }
+
+/* ======================== */
+/* 2.1 SIDEBAR */
+/* ======================== */
+
+.container-principal {
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
+    background-color: var(--yt-grey-dark);
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    z-index: 1000;
+    border-top: 1px solid #333;
+}
+
+.sidebar-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    cursor: pointer;
+    color: var(--yt-grey-light);
+}
+
+.sidebar-item .icon {
+    font-size: 20px;
+}
+
+.sidebar-item p {
+    font-size: 10px;
+    margin-top: 2px;
+}
+
+.sidebar-footer {
+    display: none;
+}
+
+/* Ajuste para el Main: que no se tape el contenido con la barra inferior */
+main {
+    padding-bottom: 70px; /* Espacio para que la barra no tape el último video */
+}
+
+/* ======================== */
+/* 3. SECCIÓN DE VIDEOS (MAIN CONTENT) */
+/* ======================== */
+
 .video-section {
     display: grid;
-    grid-template-rows: auto;
-    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 16px;
     padding: 20px;
     }
 
@@ -73,30 +158,20 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 20px;
 }
 
 .video-thumbnail {
-    width: 90%;
+    width: 100%;
     height: auto;
-    border-radius: 10px;
+    border-radius: 12px;
     cursor: pointer;
-    margin: 10px
+    display: block;
+    padding: 5px;
 }
 
-.logo-and-title {
-    display: flex;
-    margin-top: 1px;
-    align-items: center;
-    padding-left: 5px;
-}
-
-.video-title {
-    display: flex;
-    font-family: Arial, sans-serif;
-    font-size: 13px;
-    font-weight: bold;
-    margin: 10px 0 5px 0;
+.channel-link {
+    flex-shrink: 0;
+    margin-right: 12px;
 }
 
 .channel-logo {
@@ -105,4 +180,146 @@ body {
     border-radius: 50%;
     margin-right: 10px;
     cursor: pointer;
+    display: block;
+}
+
+.video-details {
+    overflow: hidden;
+}
+
+.video-title {
+    font-size: 1rem;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    line-height: 1.4;
+    max-height: 3.2em; /* Limita a 2 líneas */
+    overflow: hidden;  
+    margin: 5px 0;
+}
+
+.video-info {
+    display: flex;
+    padding: var(--padding-sm) 0;
+}
+
+.channel-name,
+.video-metadata {
+    font-size: 0.875rem;
+    color: var(--yt-grey-medium);
+    padding: 1px;
+}
+
+
+/* Estilos para Laptops y Desktop (Pantallas mayores a 992px) */
+@media only screen and (min-width: 992px) {
+
+    .video-section {
+        /* Aumentamos el espacio entre videos para que no se vea amontonado */
+        gap: 24px;
+        padding: 40px;
+        /* Forzamos a que las columnas tengan un ancho más grande y elegante */
+        grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    }
+
+    .navbar {
+        /* En pantallas grandes, podemos dar más espacio lateral a la barra */
+        padding: 0 40px;
+    }
+
+    .video-title {
+        /* En laptops el texto puede ser un poco más grande */
+        font-size: 1.1rem;
+    }
+
+    .navbar {
+        /* Cambiamos a flex-start para que la búsqueda se pegue al logo */
+        justify-content: flex-start; 
+    }
+
+    .searchbox {
+        /* Desactivamos el crecimiento automático */
+        flex-grow: 0; 
+        /* Ancho fijo para que no sea tan larga */
+        width: 400px; 
+        /* Espacio exacto entre el logo y la barra */
+        margin-left: 60px; 
+    }
+
+    .container-principal {
+        flex-direction: row;
+    }
+
+    .sidebar {
+        position: sticky;   
+        top: 56px;           
+        width: 240px;        
+        height: calc(100vh - 56px); 
+        flex-direction: column; 
+        justify-content: flex-start; 
+        padding: 12px;
+        background-color: var(--yt-background); /* Color de fondo */
+        border-top: none;
+    }
+
+    .sidebar-item {
+        flex-direction: row; 
+        width: 100%;
+        padding: 12px;
+        border-radius: 10px;
+        margin-bottom: 4px;
+    }
+
+    .sidebar-item:hover {
+        background-color: #272727; 
+    }
+
+    .sidebar-item .icon {
+        margin-right: 20px; 
+        font-size: 22px;
+    }
+
+    .sidebar-item p {
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    main {
+        padding-bottom: 0;
+    } 
+
+    .sidebar-divider {
+    border: 0;
+    height: 1px;
+    background-color: #3f3f3f;
+    margin: 12px 0;
+    }
+
+.sidebar-footer {
+        display: block; /* Lo mostramos solo en pantallas grandes */
+        padding: 16px 8px;
+    }
+
+    .footer-links {
+        display: flex;
+        flex-wrap: wrap; /* Para que los links salten de línea si no caben */
+        gap: 8px;
+        margin-bottom: 12px;
+    }
+
+    .footer-links a {
+        color: #aaa; /* Gris clarito */
+        font-size: 12px;
+        font-weight: 600;
+        text-decoration: none;
+    }
+
+    .footer-links a:hover {
+        text-decoration: underline;
+    }
+
+    .copyright {
+        color: #717171; /* Gris más oscuro para el texto de copyright */
+        font-size: 12px;
+        margin-top: 16px;
+    }
 }
